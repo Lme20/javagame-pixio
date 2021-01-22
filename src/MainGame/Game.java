@@ -2,6 +2,7 @@ package MainGame;
 
 import Display.Display;
 import Graphics.ImageLoader;
+import Graphics.SpriteSheet;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -21,6 +22,7 @@ public class Game implements Runnable{
     private Graphics g;
 
     private BufferedImage grassTest;
+    private SpriteSheet sheet;
 
     //Constructor
     public Game(String title, int width, int height){
@@ -33,7 +35,7 @@ public class Game implements Runnable{
     private void init(){
         display = new Display(title, width, height);
         grassTest = ImageLoader.loadImage("/textures/grassTest.jpg");
-
+        sheet = new SpriteSheet(grassTest);
     }
 
     //Renders game
@@ -48,7 +50,7 @@ public class Game implements Runnable{
         g.clearRect(0, 0,width,height);
         // GRAPHICS
 
-       g.drawImage(grassTest,20, 20, null);
+       g.drawImage(sheet.crop(0,0, 32, 32), 5, 5, null);
 
 
 
