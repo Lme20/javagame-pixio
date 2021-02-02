@@ -50,7 +50,7 @@ public class Game implements Runnable{
         //CLEAR SCREEN
         g.clearRect(0, 0,width,height);
         // GRAPHICS
-        g.drawImage(Assets.player, 10, 10, null);
+        g.drawImage(Assets.house, 10, 10, null);
 
 
 
