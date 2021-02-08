@@ -50,7 +50,7 @@ public class Game implements Runnable{
         //CLEAR SCREEN
         g.clearRect(0, 0,width,height);
         // GRAPHICS
-        g.drawImage(Assets.house, 10, 10, null);
+        g.drawImage(Assets.house, x, 10, null);
 
 
 
@@ -60,17 +60,42 @@ public class Game implements Runnable{
         g.dispose();
     }
 
+    int x = 0;
     //Updates game
     private void update(){
-
+        x += 1;
     }
 
     public void run(){
         init();
 
-        while(running){
-            update();
-            render();
+        int fps = 60;
+        double timePerUpdate = 1000000000 / fps;
+        double delta = 0;
+        long now;
+        long lastTime = System.nanoTime();
+        long timer = 0;
+        int update = 0;
+
+        while(running) {
+            now = System.nanoTime();
+            delta += (now - lastTime) / timePerUpdate;
+            timer += now - lastTime;
+            lastTime = now;
+
+
+
+            if (delta >= 1) {
+                update();
+                render();
+                update++;
+                delta--;
+            }
+            if(timer >= 1000000000)
+                System.out.println("Updates and Frames" + update);
+                update = 0;
+                timer = 0;
+
         }
         stop();
     }
