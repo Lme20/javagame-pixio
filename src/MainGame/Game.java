@@ -1,13 +1,15 @@
 package MainGame;
 
 import Display.Display;
-import Graphics.ImageLoader;
-import Graphics.SpriteSheet;
+
 import Graphics.*;
+import States.GameState;
+import States.MenuState;
+import States.SettingsState;
+import States.State;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
 
 //Uses Threads
 public class Game implements Runnable{
@@ -22,8 +24,11 @@ public class Game implements Runnable{
     private BufferStrategy bs;
     private Graphics g;
 
-    //private BufferedImage grassTest;
-    //private SpriteSheet sheet;
+    //States
+    private State gameState;
+    private State menuState;
+    private State settingsState;
+
     //Constructor
     public Game(String title, int width, int height){
         this.height = height;
@@ -34,9 +39,20 @@ public class Game implements Runnable{
     //Initialize graphics
     private void init(){
         display = new Display(title, width, height);
-        //grassTest = ImageLoader.loadImage("/textures/grassTest.jpg");
-        //sheet = new SpriteSheet(grassTest);
         Assets.init();
+
+        //Game state initialized
+        gameState = new GameState();
+        State.setState(gameState);
+
+        //Menu state initialized
+        menuState = new MenuState();
+        State.setState(menuState);
+
+        //Settings state initialized
+        settingsState = new SettingsState();
+        State.setState(settingsState);
+
     }
 
     //Renders game
@@ -52,7 +68,10 @@ public class Game implements Runnable{
         // GRAPHICS
         g.drawImage(Assets.house, x, 10, null);
 
-
+        //STATE
+        if(State.getState() != null){
+            State.getState().render(g);
+        }
 
 
         //END GRAPHICS
@@ -63,7 +82,10 @@ public class Game implements Runnable{
     int x = 0;
     //Updates game
     private void update(){
-        x += 1;
+        if(State.getState() != null){
+            State.getState().update();
+        }
+
     }
 
     public void run(){
@@ -95,7 +117,6 @@ public class Game implements Runnable{
                 System.out.println("Updates and Frames" + update);
                 update = 0;
                 timer = 0;
-
         }
         stop();
     }
