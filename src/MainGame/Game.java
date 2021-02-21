@@ -47,11 +47,11 @@ public class Game implements Runnable{
 
         //Menu state initialized
         menuState = new MenuState();
-        State.setState(menuState);
+        //State.setState(menuState);
 
         //Settings state initialized
         settingsState = new SettingsState();
-        State.setState(settingsState);
+        //State.setState(settingsState);
 
     }
 
