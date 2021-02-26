@@ -29,28 +29,33 @@ public class Game implements Runnable{
     private State menuState;
     private State settingsState;
 
+    //input
+    private KeyManager keyManager;
+
     //Constructor
     public Game(String title, int width, int height){
         this.height = height;
         this.width = width;
         this.title = title;
+        keyManager = new KeyManager();
     }
 
     //Initialize graphics
     private void init(){
         display = new Display(title, width, height);
+        display.getFrame().addKeyListener(keyManager);
         Assets.init();
 
         //Game state initialized
-        gameState = new GameState();
+        gameState = new GameState(this);
         State.setState(gameState);
 
         //Menu state initialized
-        menuState = new MenuState();
+        menuState = new MenuState(this);
         //State.setState(menuState);
 
         //Settings state initialized
-        settingsState = new SettingsState();
+        settingsState = new SettingsState(this);
         //State.setState(settingsState);
 
     }
@@ -80,8 +85,10 @@ public class Game implements Runnable{
     }
 
     int x = 0;
-    //Updates game
+    //Updates game, update this every time a function is added!!!
     private void update(){
+        keyManager.update();
+
         if(State.getState() != null){
             State.getState().update();
         }
@@ -120,6 +127,12 @@ public class Game implements Runnable{
         }
         stop();
     }
+
+    public KeyManager getKeyManager(){
+        return keyManager;
+    }
+
+
 
     //Starting thread
     public synchronized void start(){

@@ -1,11 +1,13 @@
 package States;
 
+import MainGame.Game;
+
 import java.awt.*;
 
 public class SettingsState extends State{
 
-    public SettingsState(){
-
+    public SettingsState(Game game){
+        super(game);
     }
 
     @Override

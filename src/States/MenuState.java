@@ -1,10 +1,13 @@
 package States;
 
+import MainGame.Game;
+
 import java.awt.*;
 
 public class MenuState extends State{
 
-    public MenuState(){
+    public MenuState(Game game){
+        super(game);
     }
 
 
