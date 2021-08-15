@@ -5,6 +5,7 @@ import java.awt.*;
 import Entity.Creatures.Player;
 import Graphics.Assets;
 import MainGame.Game;
+import MainGame.tiles.Tile;
 
 public class GameState extends State {
 
@@ -26,6 +27,9 @@ public class GameState extends State {
     public void render(Graphics g) {
         //g.drawImage(Assets.house, 0, 0, null);
         player.render(g);
+
+        //rendering Tiles
+        Tile.tiles[0].render(g, 0,0 );
 
     }
 }
